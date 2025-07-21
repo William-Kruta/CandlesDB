@@ -3,15 +3,10 @@ import pandas as pd
 
 import yfinance as yf
 
-try:
-    from web import download
-    from database import Database
-    from utils import is_stale
-except ImportError:
-    from CandlesDB.web import download
-    from CandlesDB.database import Database
-    from CandlesDB.utils import is_stale
 
+from .web import download
+from .database import Database
+from .utils import is_stale
 
 period_mapping = {
     "1d": 1,

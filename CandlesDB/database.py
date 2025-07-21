@@ -120,7 +120,11 @@ class Database:
             ORDER BY {column} DESC
             LIMIT 1
         """
-        df = pd.read_sql_query(query, self.conn, params=[ticker])
+        try:
+            df = pd.read_sql_query(query, self.conn, params=[ticker])
+        except pd.errors.DatabaseError:
+            self._create_table()
+            df = pd.read_sql_query(query, self.conn, params=[ticker])
         return df
 
 
