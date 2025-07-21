@@ -1,0 +1,26 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "CandlesDB"
+version = "0.0.1"
+authors = [
+  { name="William Kruta", email="wjkruta@email.com" },
+]
+description = "A library to efficiently store and query OHLCV stock candle data."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "pandas",
+    "polars",
+    "yfinance"
+]
+
+[tool.setuptools.package-data]
+CandlesDB = ["data/*.db"]
