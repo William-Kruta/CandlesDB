@@ -96,16 +96,19 @@ class Database:
             df_results = pd.concat(data, axis=0)
         return df_results
 
-    def delete_record(self, ticker: str, date: str):
+    def delete_record(self, ticker: str, date: str = ""):
         if self.conn is None:
             self._connect()
 
         if date != "" and "T" not in date:
             date += "T00:00:00"
-
-        # Use a parameterized query to prevent SQL injection
-        query = f"DELETE FROM {self.table_name} WHERE symbol = ? AND date = ?"
-        self.cursor.execute(query, (ticker, date))
+        if date == "":
+            query = f"DELETE FROM {self.table_name} WHERE symbol = ?"
+            self.cursor.execute(query, (ticker,))
+        else:
+            # Use a parameterized query to prevent SQL injection
+            query = f"DELETE FROM {self.table_name} WHERE symbol = ? AND date = ?"
+            self.cursor.execute(query, (ticker, date))
 
         self.conn.commit()  # Commit the changes
         print(f"Record deleted successfully for symbol '{ticker}' and date '{date}'.")

@@ -24,9 +24,9 @@ class CandlesDB:
     def get_candles(
         self, tickers, period: str = "max", interval: str = "1d", limit: int = -1
     ):
-
+        if isinstance(tickers, str):
+            tickers = [tickers]
         tickers_state = self._determine_ticker_state(tickers)
-        print(f"Ticker State: {tickers_state}")
         data = []
         if len(tickers_state["fresh"]) > 0:
             fresh_df = download(tickers_state["fresh"], period="max", interval="1d")
